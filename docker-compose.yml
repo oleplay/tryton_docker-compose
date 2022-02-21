@@ -1,0 +1,46 @@
+version: '3'
+
+networks:
+  tryton:
+    driver: bridge
+    attachable: true
+
+volumes:
+  tryton-database:
+  tryton-data:
+
+services:
+  # PostgreSQL
+  tryton-postgres:
+    image: postgres:14
+    restart: always
+    environment:
+      - POSTGRES_USER=tryton
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=tryton
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    # ports:
+    #   - "5432:5432"
+    volumes:
+      - tryton-database:/var/lib/postgresql/data
+    networks:
+      - Tryton
+
+  # Tryton server
+  tryton:
+    image: tryton/tryton
+    restart: always
+    environment:
+      - DB_HOSTNAME=tryton-postgres
+      - DB_PASSWORD=${POSTGRES_PASSWORD}
+      - DB_USER=tryton
+    volumes:
+      - tryton-data:/var/lib/trytond/data
+    ports:
+      - "8000:8000"
+    networks:
+      - tryton
+    depends_on:
+      - tryton-postgres
+    
+    
