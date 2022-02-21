@@ -39,7 +39,9 @@ Due to limitations of Docker Compose the initialization of the Postgres database
    Tryton should now be reachable under `your-IP:8000`
  
  ---
-* (Other trytond-admin commands)
+
+* Other trytond-admin commands  
+  
    All trytond-admin commands should be run the same way as the first
    ```bash
    docker-compose --project-name tryton run tryton trytond-admin
