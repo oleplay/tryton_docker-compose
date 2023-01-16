@@ -24,7 +24,7 @@ services:
     volumes:
       - tryton-database:/var/lib/postgresql/data
     networks:
-      - Tryton
+      - tryton
 
   # Tryton server
   tryton:
